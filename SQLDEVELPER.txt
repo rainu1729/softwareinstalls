@@ -81,6 +81,10 @@ sudo docker pull alexeiled/docker-oracle-xe-11g
 
 docker run -d --shm-size=2g -p 1521:1521 -p 8080:8080 alexeiled/docker-oracle-xe-11g
 
+8. Connect to the running instance of oracle via  sql developer
+connection details
+username : system , pwd : oracle , host : localhost , port : 1521 , SID : XE , role as Sysdba
+
 
 9. some background queries running in sql developer for finding dependencies and reference objects.
 
