@@ -4,7 +4,7 @@ sudo docker pull alexeiled/docker-oracle-xe-11g
 
 2. starting oracle XE
 
-docker run -d --shm-size=2g -v /home/rainu/Oracle11g/db1:/u01/app/oracle/data -p 1523:1521 -p 8083:8080 alexeiled/docker-oracle-xe-11g 
+docker run -d --shm-size=2g -v /home/rainu/Oracle11g/db1:/u01/app/oracle/oradata -p 1523:1521 -p 8083:8080 alexeiled/docker-oracle-xe-11g 
 
 3. connect via sqlplus
 
