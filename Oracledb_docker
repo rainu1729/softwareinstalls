@@ -9,3 +9,71 @@ docker run -d --shm-size=2g -v /home/rainu/Oracle11g/db1:/u01/app/oracle/oradata
 3. connect via sqlplus
 
 sqlplus sys/oracle@localhost:1523/xe as sysdba
+###############################################
+1. login to container-registry.oracle.com via browser, accept the terms of agreement for the individual docker images.
+
+2. login to container-registry.oracle.com via docker commandline
+
+docker login container-registry.oracle.com
+
+enter username and password
+
+login Succeeded
+
+3. download the required docker image , ensure to accept the corresponding terms of agreement.
+
+docker pull container-registry.oracle.com/database/enterprise:12.2.0.1-slim
+
+4. create a configuration file db_config.dat to set database env
+
+DB_SID=ORCLDB1  # default ORCL
+DB_PDB=ORCLPDB1  # default PDB1
+DB_PASSWD=Renu_1729 # default Oracle
+DB_MEMORY=2GB   # default is 4GB
+DB_DOMAIN=localdomain # default localdomain
+
+5. creating the docker container run command
+### port mapping 1523(localhost) : 1521(in container)
+docker run -d -it --name anyname --env-file db_config.dat -p 1523:1521 -p 8083:8080 container-registry.oracle.com/database/enterprise:12.2.0.1-slim 
+
+6. login to the container and open bash
+
+ docker exec -it anyname /bin/bash
+
+7. check the log files 
+
+  /home/oracle/setup/log/setupDB.log
+  
+8. config the tnsnames.ora file in our local system to connect to database via oracle client
+    usually present in $ORACLE_HOME/network/admin folder
+ORCLDB1=
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST =0.0.0.0 )(PORT = 1523))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = ORCLDB1.localdomain)
+    )
+  )
+ORCLPDB1 =
+(DESCRIPTION =
+     (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1523))
+
+     (CONNECT_DATA =       (SERVER = DEDICATED)
+     (SERVICE_NAME = ORCLPDB1.localdomain)
+    ) )
+    
+ 9. connect to the database as sys user from outside the container using sqlplus
+ 
+ sqlplus sys/Renu_1729@ORCLDB1 as sysdba
+ 
+ 
+
+
+
+
+
+
+
+
+
