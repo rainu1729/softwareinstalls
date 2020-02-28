@@ -1,0 +1,4 @@
+##install jenkins via docker
+
+docker pull jenkins
+
