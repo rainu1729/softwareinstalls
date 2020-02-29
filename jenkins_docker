@@ -17,5 +17,6 @@ docker run -d -it --name mysqlplus -v vsqlplus:/~ oracle/instantclient:19 sqlplu
 ##add the running container to a user_defined network
 docker network connect db_deploy_network mysqlplus
 docker network connect db_deploy_network database01
+docker network connect db_deploy_network jenkinsci
 
 
