@@ -2,5 +2,20 @@
 
 docker pull jenkins
 
-docker run -d -it --name jenkinsci -v jenkins_home:/var/jenkins_home -p 49001:8080 
+docker run -d -it --name jenkinsci -v jenkins_home:/var/jenkins_home -p 49001:8080
+
+### Oracle client docker image
+### user the dockerfile provided at
+##https://github.com/oracle/docker-images/tree/master/OracleInstantClient
+docker build --pull -t oracle/instantclient:19 .
+
+##start container to persist
+
+docker run -d -it --name mysqlplus -v vsqlplus:/~ oracle/instantclient:19 sqlplus
+
+
+##add the running container to a user_defined network
+docker network connect db_deploy_network mysqlplus
+docker network connect db_deploy_network database01
+
 
